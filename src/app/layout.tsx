@@ -67,11 +67,11 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content={seoDefaults.themeColor} />
       </head>
-      <body className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <body className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden max-w-full">
         <ThemeProvider>
-          <div className="flex" style={{ flexDirection: "column", minHeight: "100vh" }}>
+          <div className="flex flex-col min-h-screen overflow-x-hidden w-full max-w-full">
             <Header />
-            <main style={{ flex: "1 0 auto" }}>{children}</main>
+            <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

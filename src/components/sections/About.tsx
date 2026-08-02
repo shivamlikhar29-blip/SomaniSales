@@ -92,7 +92,7 @@ export default function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-955/20 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between min-h-[140px] sm:h-40 shadow-sm"
+                  className="p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between min-h-[140px] sm:h-40 shadow-sm"
                 >
                   <div className="p-2.5 bg-white dark:bg-slate-900 rounded-xl w-max border border-slate-200/40 dark:border-slate-800/40">
                     {item.icon}
