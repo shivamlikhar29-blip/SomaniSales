@@ -30,7 +30,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl z-10 overflow-hidden"
+            className="relative w-full max-w-md max-h-[85vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl z-10"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/60 mb-6">
@@ -105,7 +105,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <span className="text-xs font-bold text-slate-400 block uppercase tracking-wider">
                     Working Hours
                   </span>
-                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-205">
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
                     10:00 AM - 8:00 PM
                   </p>
                   <span className="text-xs text-slate-500">Open Monday to Sunday</span>
