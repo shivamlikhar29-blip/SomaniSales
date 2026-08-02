@@ -28,10 +28,18 @@ export default function FAQAccordion({ items }: FAQAccordionProps) {
         return (
           <div
             key={index}
-            className="border border-slate-200 dark:border-slate-800/80 rounded-xl overflow-hidden bg-white dark:bg-slate-900/60 backdrop-blur-sm shadow-sm transition-colors duration-200"
+            className={`border rounded-xl overflow-hidden backdrop-blur-sm shadow-sm transition-all duration-200 ${
+              isOpen
+                ? "border-amber-300/60 dark:border-amber-700/40 bg-white dark:bg-zinc-900"
+                : "border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:border-amber-200/60 dark:hover:border-amber-800/30"
+            }`}
           >
             <button
-              className="w-full flex items-center justify-between p-5 text-left font-semibold text-slate-900 dark:text-slate-100 hover:text-indigo-650 dark:hover:text-indigo-400 transition-colors duration-200 cursor-pointer"
+              className={`w-full flex items-center justify-between p-5 text-left font-semibold transition-colors duration-200 cursor-pointer ${
+                isOpen
+                  ? "text-amber-600 dark:text-amber-400"
+                  : "text-zinc-900 dark:text-zinc-100 hover:text-amber-600 dark:hover:text-amber-400"
+              }`}
               onClick={() => toggleAccordion(index)}
               aria-expanded={isOpen}
             >
@@ -39,7 +47,7 @@ export default function FAQAccordion({ items }: FAQAccordionProps) {
               <motion.div
                 animate={{ rotate: isOpen ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
-                className="text-slate-400 shrink-0"
+                className={`shrink-0 transition-colors ${isOpen ? "text-amber-500" : "text-zinc-400"}`}
               >
                 <ChevronDown className="w-5 h-5" />
               </motion.div>
@@ -53,7 +61,7 @@ export default function FAQAccordion({ items }: FAQAccordionProps) {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
-                  <div className="p-5 pt-0 text-slate-600 dark:text-slate-350 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800/40 bg-slate-50/50 dark:bg-slate-950/20">
+                  <div className="p-5 pt-0 text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed border-t border-amber-100 dark:border-zinc-800/40 bg-amber-50/30 dark:bg-amber-950/10">
                     {item.answer}
                   </div>
                 </motion.div>

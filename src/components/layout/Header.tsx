@@ -7,6 +7,8 @@ import { Droplet, Menu, X, PhoneCall } from "lucide-react";
 import ThemeToggle from "../common/ThemeToggle";
 import ContactModal from "../common/ContactModal";
 
+import BrandLogo from "../common/BrandLogo";
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,17 +27,28 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll reliably when mobile menu is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("overflow-hidden");
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("overflow-hidden");
     };
   }, [isOpen]);
+
+  // Close mobile menu on ESC key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const navLinks = [
     { name: "Home", href: "/#" },
@@ -48,18 +61,16 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/60 shadow-sm ${
+        className={`sticky top-0 z-40 w-full transition-all duration-300 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 shadow-sm ${
           scrolled ? "py-3" : "py-4 sm:py-5"
         }`}
       >
         <div className="container mx-auto px-4 flex items-center justify-between">
           {/* Brand Logo */}
-          <Link href="/#" className="flex items-center gap-2 group" aria-label="Somani Sales Home">
-            <div className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-500/20 group-hover:bg-indigo-700 transition-colors duration-200">
-              <Droplet className="w-4 h-4 sm:w-5 sm:h-5 fill-current animate-pulse" />
-            </div>
-            <span className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center">
-              Somani<span className="text-indigo-600 dark:text-indigo-400 font-semibold ml-1">Sales</span>
+          <Link href="/#" className="flex items-center gap-2.5 group" aria-label="Somani Sales Home">
+            <BrandLogo className="w-9 h-9 sm:w-10 sm:h-10 shrink-0" />
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center">
+              Somani<span className="text-[#C9A84C] font-extrabold ml-1">Sales</span>
             </span>
           </Link>
 
@@ -70,9 +81,10 @@ export default function Header() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm font-medium text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition-colors duration-200"
+                    className="text-sm font-medium text-zinc-600 hover:text-[#C9A84C] dark:text-zinc-300 dark:hover:text-[#C9A84C] transition-colors duration-200 relative group"
                   >
                     {link.name}
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-[#C9A84C] group-hover:w-full transition-all duration-300 rounded-full" />
                   </Link>
                 </li>
               ))}
@@ -84,7 +96,7 @@ export default function Header() {
             <ThemeToggle />
             <button
               onClick={() => setIsModalOpen(true)}
-              className="hidden sm:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 px-5 rounded-full transition-all duration-200 hover:-translate-y-0.5 shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/25 cursor-pointer active:translate-y-0"
+              className="hidden sm:flex items-center gap-2 bg-[#C9A84C] hover:bg-[#A8872E] text-white text-sm font-semibold py-2.5 px-5 rounded-full transition-all duration-200 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Call Now</span>
@@ -92,7 +104,7 @@ export default function Header() {
 
             {/* Mobile Menu Trigger */}
             <button
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 cursor-pointer"
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors duration-200 cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
               aria-label="Toggle Menu"
@@ -101,64 +113,66 @@ export default function Header() {
             </button>
           </div>
         </div>
+      </header>
 
-        {/* Mobile Backdrop Overlay */}
-        {isOpen && (
-          <div
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-[98] md:hidden transition-opacity"
-            onClick={() => setIsOpen(false)}
-          />
-        )}
-
-        {/* Mobile Drawer */}
+      {/* Mobile Backdrop Overlay - placed outside header to avoid stacking context issues */}
+      {isOpen && (
         <div
-          className={`fixed inset-y-0 right-0 w-full max-w-[280px] sm:max-w-sm bg-white dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 shadow-2xl p-6 transition-all duration-300 z-[99] md:hidden ${
-            isOpen
-              ? "translate-x-0 opacity-100"
-              : "translate-x-full opacity-0 invisible pointer-events-none"
-          }`}
-          style={{ height: "100vh" }}
-        >
-          <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 dark:border-slate-900">
-            <span className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              Somani Sales
+          className="fixed inset-0 bg-zinc-950/70 backdrop-blur-xs z-[998] md:hidden transition-opacity duration-300"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Mobile Sidebar Drawer */}
+      <div
+        className={`fixed top-0 bottom-0 right-0 h-dvh w-full max-w-[280px] sm:max-w-sm bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl p-6 transition-transform duration-300 ease-in-out z-[999] md:hidden flex flex-col justify-between overflow-y-auto ${
+          isOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
+        }`}
+      >
+        <div>
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-100 dark:border-zinc-900">
+            <span className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+              <BrandLogo className="w-6 h-6 shrink-0" />
+              Somani <span className="text-[#C9A84C]">Sales</span>
             </span>
             <button
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 cursor-pointer"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer transition-colors"
               onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
           <nav aria-label="Mobile Navigation">
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 block py-2 transition-colors"
+                    className="text-base font-semibold text-zinc-800 dark:text-zinc-200 hover:text-[#C9A84C] dark:hover:text-[#C9A84C] block py-3 px-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
-              <li className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-900">
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    setIsModalOpen(true);
-                  }}
-                  className="flex items-center justify-center gap-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-600/10 cursor-pointer"
-                >
-                  <PhoneCall className="w-4 h-4" />
-                  <span>Call Hotline</span>
-                </button>
-              </li>
             </ul>
           </nav>
         </div>
-      </header>
+
+        <div className="pt-6 border-t border-zinc-100 dark:border-zinc-900 mt-6">
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              setIsModalOpen(true);
+            }}
+            className="flex items-center justify-center gap-2 w-full bg-[#C9A84C] hover:bg-[#A8872E] text-white font-semibold py-3 rounded-xl transition-all duration-200 cursor-pointer active:scale-[0.98]"
+          >
+            <PhoneCall className="w-4 h-4" />
+            <span>Call Hotline</span>
+          </button>
+        </div>
+      </div>
 
       {/* Info Popup Modal */}
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

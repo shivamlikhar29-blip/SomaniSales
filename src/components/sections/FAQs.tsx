@@ -25,18 +25,20 @@ export default function FAQs() {
   ];
 
   return (
-    <section id="faqs" className="py-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800/40 transition-colors duration-300">
+    <section id="faqs" className="py-20 bg-white dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800/40 transition-colors duration-300">
       <div className="container mx-auto px-4">
         {/* Title */}
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+            <span className="w-5 h-0.5 bg-amber-500 rounded-full inline-block" />
             Frequently Asked Questions
+            <span className="w-5 h-0.5 bg-amber-500 rounded-full inline-block" />
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2 flex items-center justify-center gap-2.5">
-            <HelpCircle className="w-8 h-8 text-indigo-600 dark:text-indigo-400 shrink-0" />
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mt-2 flex items-center justify-center gap-2.5">
+            <HelpCircle className="w-8 h-8 text-amber-500 dark:text-amber-400 shrink-0" />
             <span>Got Questions?</span>
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-3 leading-relaxed">
             Find answers to common inquiries regarding our business, location, product supplies, and ordering methods.
           </p>
         </div>

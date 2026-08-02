@@ -7,12 +7,13 @@ html, body {
   max-width: 100vw;
 }
 
-:root {
-  --primary-glow: rgba(99, 102, 241, 0.15);
+body.overflow-hidden {
+  overflow: hidden !important;
 }
 
-[data-theme="dark"] {
-  --primary-glow: rgba(129, 140, 248, 0.25);
+:root {
+  --gold: #C9A84C;
+  --gold-dark: #A8872E;
 }
 
 /* Custom Scrollbar */
@@ -26,33 +27,15 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
+  background: rgba(201, 168, 76, 0.35);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.5);
+  background: rgba(201, 168, 76, 0.6);
 }
 
-/* Base custom classes to support background shapes */
-.glow-blob {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--primary-glow) 0%, rgba(99, 102, 241, 0) 70%);
-  border-radius: 50%;
-  filter: blur(40px);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.glow-blob-1 {
-  top: 5%;
-  left: 10%;
-}
-
-.glow-blob-2 {
-  bottom: 15%;
-  right: 10%;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0) 70%);
+/* Gold gradient text utility */
+.text-gold-gradient {
+  color: #C9A84C;
 }

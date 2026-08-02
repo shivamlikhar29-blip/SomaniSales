@@ -67,7 +67,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content={seoDefaults.themeColor} />
       </head>
-      <body className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden max-w-full">
+      <body className="bg-gray-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-x-hidden max-w-full">
         <ThemeProvider>
           <div className="flex flex-col min-h-screen overflow-x-hidden w-full max-w-full">
             <Header />

@@ -20,7 +20,7 @@ export default function Products() {
     {
       category: "Pipes & Hoses",
       categoryId: "pipes",
-      image: "/images/pipes.png",
+      image: "/images/lapeta-pipe.png",
       name: "Heavy Duty Lapeta Pipe",
       description: "Supreme quality, guaranteed durability engineered for high pressure agriculture and heavy fluid conveyance.",
       features: ["Supreme quality polymer", "Burst-resistant reinforcement", "High sunlight tolerance"],
@@ -28,7 +28,7 @@ export default function Products() {
     {
       category: "Pipes & Hoses",
       categoryId: "pipes",
-      image: "/images/pipes.png",
+      image: "/images/garden-pipe.png",
       name: "PVC Garden Pipes",
       description: "Highly flexible, weather-proof PVC pipes with seamless designs for home gardens and nurseries.",
       features: ["Flexible kink-free body", "Anti-algae interior liner", "UV-stabilized casing"],
@@ -36,7 +36,7 @@ export default function Products() {
     {
       category: "Pipes & Hoses",
       categoryId: "pipes",
-      image: "/images/pipes.png",
+      image: "/images/hdpe-pipe.png",
       name: "PVC Flexible, FRP, & HDPE Pipes",
       description: "Specialized heavy piping configurations ideal for municipal water supply and chemical conveyance.",
       features: ["Corrosion resistant material", "High tensile strength", "Standard length options"],
@@ -45,7 +45,7 @@ export default function Products() {
     {
       category: "Bathroom Accessories",
       categoryId: "bathroom",
-      image: "/images/bathroom.png",
+      image: "/images/ss-accessories.png",
       name: "Stainless Steel Accessories",
       description: "Rust-free, highly durable premium stainless steel structures with polished elegant chrome finishes.",
       features: ["Grade 304 Stainless Steel", "Mirror chrome finish", "Concealed mounting kit included"],
@@ -53,7 +53,7 @@ export default function Products() {
     {
       category: "Bathroom Accessories",
       categoryId: "bathroom",
-      image: "/images/bathroom.png",
+      image: "/images/plastic-accessories.png",
       name: "Plastic Accessories",
       description: "Lightweight, cost-effective, and easy-to-maintain polymer sanitary wares for utility applications.",
       features: ["Food-grade virgin plastic", "Impact-resistant material", "Easy clean surfaces"],
@@ -61,7 +61,7 @@ export default function Products() {
     {
       category: "Bathroom Accessories",
       categoryId: "bathroom",
-      image: "/images/bathroom.png",
+      image: "/images/brass-fittings.png",
       name: "Fittings & Valves",
       description: "Premium brass control cocks, concealed bath valves, and wall mixers designed for leak-free operations.",
       features: ["Solid brass inner core", "Quarter-turn ceramic disc", "Optimized water flow design"],
@@ -70,7 +70,7 @@ export default function Products() {
     {
       category: "Valves & Industrial Fittings",
       categoryId: "valves",
-      image: "/images/valves.png",
+      image: "/images/ball-valves.png",
       name: "Ball Valves",
       description: "Precision-molded polymer and stainless steel ball valves designed for easy flow control and zero maintenance.",
       features: ["Zero-leak seals", "Stainless Steel/PVC options", "Smooth lever action"],
@@ -78,7 +78,7 @@ export default function Products() {
     {
       category: "Valves & Industrial Fittings",
       categoryId: "valves",
-      image: "/images/valves.png",
+      image: "/images/flanged-valves.png",
       name: "Flanged Ball Valves",
       description: "Heavy-duty industrial valves for large fluid volume control in chemical and commercial piping networks.",
       features: ["ANSI class rating", "Flanged bolt alignment", "High temperature packing"],
@@ -99,25 +99,27 @@ export default function Products() {
 
   const getIcon = (catId: string) => {
     switch(catId) {
-      case "pipes": return <Sliders className="w-4 h-4 text-indigo-500" />;
-      case "bathroom": return <Sparkles className="w-4 h-4 text-sky-500" />;
-      case "valves": return <Settings className="w-4 h-4 text-amber-500" />;
+      case "pipes": return <Sliders className="w-4 h-4 text-[#C9A84C]" />;
+      case "bathroom": return <Sparkles className="w-4 h-4 text-blue-500" />;
+      case "valves": return <Settings className="w-4 h-4 text-[#C9A84C]" />;
       default: return null;
     }
   };
 
   return (
-    <section id="products" className="py-20 bg-slate-50 dark:bg-slate-950/80 border-t border-slate-200/60 dark:border-slate-800/40 transition-colors duration-300">
+    <section id="products" className="py-20 bg-gray-50 dark:bg-zinc-950/80 border-t border-zinc-200/60 dark:border-zinc-800/40 transition-colors duration-300">
       <div className="container mx-auto px-4">
         {/* Title */}
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#C9A84C]">
+            <span className="w-5 h-0.5 bg-[#C9A84C] rounded-full inline-block" />
             Product Catalog
+            <span className="w-5 h-0.5 bg-[#C9A84C] rounded-full inline-block" />
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mt-2">
             Our Products
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-3 leading-relaxed">
             Browse our wide selection of certified hardware, sanitary wares, pipes, and control valves built for longevity.
           </p>
         </div>
@@ -130,8 +132,8 @@ export default function Products() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 text-sm font-semibold py-2.5 px-5 rounded-full transition-all duration-200 cursor-pointer ${
                 activeTab === tab.id
-                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/10"
-                  : "bg-white dark:bg-slate-900 text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 border border-slate-200 dark:border-slate-800"
+                  ? "bg-[#C9A84C] text-white"
+                  : "bg-white dark:bg-zinc-900 text-zinc-600 hover:text-[#C9A84C] dark:text-zinc-400 dark:hover:text-[#C9A84C] border border-zinc-200 dark:border-zinc-800 hover:border-amber-200 dark:hover:border-amber-800/40"
               }`}
             >
               {tab.icon}
