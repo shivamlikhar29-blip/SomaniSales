@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/config/seo";
 
+export const dynamic = "force-static";
+
 // In a real application, you might fetch products/pages from an API or database
 const staticPages = [
   { url: "", changeFrequency: "daily" as const, priority: 1.0 },
