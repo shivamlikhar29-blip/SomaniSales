@@ -1,10 +1,54 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, CheckCircle } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Hero() {
+  const slides = [
+    {
+      src: "/ShopImage.jpg",
+      alt: "Somani Sales Main Storefront in Siyagunj Market Indore",
+      title: "Somani Sales Storefront",
+      tag: "Main Wholesale Hub",
+    },
+    {
+      src: "/inside.jpg",
+      alt: "Inside view of Somani Sales hardware warehouse and stock",
+      title: "Store Interior & Inventory",
+      tag: "Ready Wholesale Stock",
+    },
+    {
+      src: "/ss.jpg",
+      alt: "Stainless Steel fittings and sanitary accessories",
+      title: "Premium SS Fittings",
+      tag: "Grade 304 Quality",
+    },
+    {
+      src: "/images/hero.png",
+      alt: "Industrial valves and heavy duty pipe fittings",
+      title: "Valves & Industrial Spares",
+      tag: "100% Quality Tested",
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       {/* Background glowing blobs */}
@@ -18,7 +62,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-indigo-55/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 py-1.5 px-3 rounded-full text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-6"
+            className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 py-1.5 px-3.5 rounded-full text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-6"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Indore's Premier Plumbing & Valves Partner</span>
@@ -41,7 +85,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl font-medium text-slate-705 dark:text-slate-300 mt-6 max-w-2xl"
+            className="text-lg sm:text-xl font-medium text-slate-700 dark:text-slate-300 mt-6 max-w-2xl"
           >
             Premium Bathroom Accessories, Heavy-Duty Pipes, and Industrial Valves for Retail and Wholesale.
           </motion.p>
@@ -50,7 +94,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-sm sm:text-base text-slate-550 dark:text-slate-400 mt-4 leading-relaxed max-w-2xl"
+            className="text-sm sm:text-base text-slate-500 dark:text-slate-400 mt-4 leading-relaxed max-w-2xl"
           >
             Since 2018, Somani Sales has been Indore’s premier supplier, wholesaler, and trading company for top-quality hardware and plumbing solutions. From heavy-duty lapeta pipes for agricultural use to elegant stainless steel bathroom accessories for modern homes, we provide supreme quality components with guaranteed durability and reliability.
           </motion.p>
@@ -81,39 +125,80 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Graphic Column */}
+        {/* Right Graphic Column: Big Auto Carousel */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="lg:col-span-5 flex justify-center relative"
+          className="lg:col-span-5 flex justify-center relative w-full"
         >
-          <div className="relative w-full max-w-[440px] aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 group">
-            {/* Animated card container */}
-            <motion.div 
-              whileHover={{ scale: 1.025 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              className="w-full h-full relative cursor-pointer"
+          <div className="relative w-full max-w-[540px] aspect-[4/3] sm:aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 group">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="w-full h-full relative"
+              >
+                <img
+                  src={slides[currentIndex].src}
+                  alt={slides[currentIndex].alt}
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Overlay shading gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent pointer-events-none" />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 text-slate-700 dark:text-white flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-md"
+              aria-label="Previous slide"
             >
-              <img
-                src="/images/hero.png"
-                alt="Premium valves and plumbing fixtures showcase"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              {/* Overlay shading gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-              
-              {/* floating badge */}
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 p-3 sm:p-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/40 dark:border-slate-800/50 shadow-lg flex items-center justify-between">
-                <div>
-                  <span className="text-[9px] sm:text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">Product Quality</span>
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">Certified Hardware</span>
-                </div>
-                <span className="text-[10px] sm:text-xs font-bold text-indigo-600 bg-indigo-50 dark:text-indigo-400/20 dark:bg-indigo-950/40 py-1 px-2.5 sm:px-3 rounded-lg border border-indigo-100/50 dark:border-indigo-900/30">
-                  100% Tested
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 text-slate-700 dark:text-white flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-md"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Pagination Dots */}
+            <div className="absolute top-4 right-4 z-20 flex gap-1.5 bg-slate-950/40 backdrop-blur-md py-1.5 px-3 rounded-full border border-white/10">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                    currentIndex === idx
+                      ? "bg-indigo-400 w-5"
+                      : "bg-white/40 hover:bg-white/70"
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Dynamic floating badge */}
+            <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/40 dark:border-slate-800/50 shadow-lg flex items-center justify-between z-20">
+              <div>
+                <span className="text-[9px] sm:text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block">
+                  Store Showcase
+                </span>
+                <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
+                  {slides[currentIndex].title}
                 </span>
               </div>
-            </motion.div>
+              <span className="text-[10px] sm:text-xs font-bold text-indigo-600 bg-indigo-50 dark:text-indigo-400 dark:bg-indigo-950/50 py-1 px-2.5 sm:px-3 rounded-lg border border-indigo-100/50 dark:border-indigo-900/40">
+                {slides[currentIndex].tag}
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>
